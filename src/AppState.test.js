@@ -8,10 +8,6 @@ describe('AppState', () => {
     appState = new AppState();
   });
 
-  it('works', () => {
-    expect(typeof appState).toBe('object');
-  });
-
   it('sets image urls', () => {
     appState.setImageURLs(mockImageURLs);
     expect(appState.imageURLs).toEqual(mockImageURLs);
