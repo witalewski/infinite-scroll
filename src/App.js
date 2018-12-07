@@ -4,7 +4,7 @@ import { Provider } from 'mobx-react';
 import styled from '@emotion/styled';
 import { AppState } from './AppState';
 import NavBar from './components/NavBar';
-import { AllPhotosView } from './components/AllPhotosView';
+import AllPhotosView from './components/AllPhotosView';
 import { FavouritesView } from './components/FavouritesView';
 
 const AppStyled = styled.div`
