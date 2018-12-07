@@ -10,7 +10,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <Provider appState={this.appState}>
           <h1>It works!</h1>
         </Provider>
