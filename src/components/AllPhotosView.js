@@ -72,7 +72,7 @@ export class AllPhotosView extends Component {
                 {image.isPlaceholder ? (
                   <div className="image-placeholder" />
                 ) : (
-                  <img className="image" alt="Shibe dog" src={image.url} />
+                  <img className="image" alt="Shibe dog" src={image.url} decoding="async" />
                 )}
               </li>
             ))}
