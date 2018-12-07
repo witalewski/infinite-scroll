@@ -1,4 +1,5 @@
 import { AppState } from './AppState';
+import mockImageURLs from './fixtures/imageURLs.json';
 
 describe('AppState', () => {
   let appState;
@@ -11,4 +12,8 @@ describe('AppState', () => {
     expect(typeof appState).toBe('object');
   });
 
+  it('sets image urls', () => {
+    appState.setImageURLs(mockImageURLs);
+    expect(appState.imageURLs).toEqual(mockImageURLs);
+  });
 });

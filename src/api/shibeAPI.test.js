@@ -6,9 +6,9 @@ jest.mock('axios');
 
 describe('shibeAPI', () => {
   it('loads URLs', done => {
-    axios.get.mockResolvedValue(mockResult);
-    getImageURLs(16).then(result => {
-        expect(result).toEqual(mockResult);
+    axios.get.mockResolvedValue({data: mockResult});
+    getImageURLs(16).then(({data}) => {
+        expect(data).toEqual(mockResult);
         done();
     })
   });
