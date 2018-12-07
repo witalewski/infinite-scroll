@@ -1,5 +1,29 @@
 import React, { Component, createRef } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Range } from 'immutable';
+import styled from '@emotion/styled';
+
+const AllPhotosViewStyled = styled.div`
+  .image-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .image {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    margin: 6px;
+  }
+
+  .image-placeholder {
+    background: lightgray;
+    width: 300px;
+    height: 400px;
+    margin: 6px;
+  }
+`;
 
 export class AllPhotosView extends Component {
   constructor(props) {
@@ -31,18 +55,30 @@ export class AllPhotosView extends Component {
   }
 
   render() {
+    const imagesToDisplay = this.props.imageURLs.map(imageURL => ({
+      url: imageURL,
+      isPlaceholder: false,
+    }));
+    if (this.props.isLoadingImageURLs) {
+      Range(0, 16).forEach(i => imagesToDisplay.push({ isPlaceholder: true }));
+    }
+
     return (
-      <div className="row" ref={this.listRef}>
+      <AllPhotosViewStyled className="row">
         <div className="col">
-          <ul>
-            {this.props.imageURLs.map(imageURL => (
-              <li key={imageURL}>
-                <img alt="Shibe dog" src={imageURL} />
+          <ul className="image-list" ref={this.listRef}>
+            {imagesToDisplay.map((image, i) => (
+              <li key={`${image.url || 'placeholder'}-${i}`}>
+                {image.isPlaceholder ? (
+                  <div className="image-placeholder" />
+                ) : (
+                  <img className="image" alt="Shibe dog" src={image.url} />
+                )}
               </li>
             ))}
           </ul>
         </div>
-      </div>
+      </AllPhotosViewStyled>
     );
   }
 }
