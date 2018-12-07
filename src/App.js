@@ -1,24 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
+import styled from '@emotion/styled';
 import { AppState } from './AppState';
-import axios from 'axios';
+import NavBar from './components/NavBar';
+import { AllPhotosView } from './components/AllPhotosView';
+import { FavouritesView } from './components/FavouritesView';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.appState = new AppState();
-    window.axios=axios;
+const AppStyled = styled.div`
+  .main {
+    padding-top: 56px;
   }
+`;
 
-  render() {
-    return (
-      <div className="App container">
-        <Provider appState={this.appState}>
-          <h1>It works!</h1>
-        </Provider>
+const appState = new AppState();
+
+export const App = () => (
+  <Provider appState={appState}>
+    <AppStyled className="App">
+      <NavBar
+        items={[
+          { label: 'Home', path: '/' },
+          { label: 'Favourites', path: '/favourites' },
+        ]}
+      />
+      <div className="main container">
+        <Switch>
+          <Route exact path="/" component={AllPhotosView} />
+          <Route path="/favourites" component={FavouritesView} />
+        </Switch>
       </div>
-    );
-  }
-}
+    </AppStyled>
+  </Provider>
+);
 
 export default App;
