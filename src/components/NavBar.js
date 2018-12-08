@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 export const NavBar = ({ location, favourites }) => (
   <nav className="navbar sticky-top navbar-light bg-light navbar-expand">
     <a className="navbar-brand" href="/">
-      Infinite Scroll Demo
+      Infinite Scroll
     </a>
     <div className="collapse navbar-collapse">
       <ul className="navbar-nav">
