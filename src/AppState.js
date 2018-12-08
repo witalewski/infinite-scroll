@@ -1,17 +1,16 @@
 import { observable, action, computed } from 'mobx';
-import { Range, Set } from 'immutable';
+import { Set } from 'immutable';
 import { getImageURLs } from './api/shibeAPI';
 import {
   storeFavouritesCookie,
   readFavouritesCookie,
 } from './utils/cookieUtil';
-import { BATCH_SIZE } from './global/constants'
-;
+import { BATCH_SIZE } from './global/constants';
 class AppState {
   @observable imageURLs = [];
   @observable placeholdersCount = 0;
 
-  @observable favourites = new Set(readFavouritesCookie() || []);
+  @observable favourites = new Set(readFavouritesCookie());
 
   @action
   setImageURLs = imageURLs => {
@@ -41,7 +40,7 @@ class AppState {
   @computed get images() {
     return [
       ...this.imageURLs,
-      ...Range(0, this.placeholdersCount).map(_ => ''),
+      ...(new Array(this.placeholdersCount)).fill(''),
     ];
   }
 

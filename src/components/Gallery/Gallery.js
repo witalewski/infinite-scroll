@@ -11,15 +11,6 @@ const PhotosViewStyled = styled.div`
     justify-content: center;
     align-items: flex-start;
   }
-
-  .image-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    flex-basis: 50%;
-    padding: 0;
-    margin: 0 ${LIST_MARGIN}px;
-  }
 `;
 
 export class Gallery extends Component {
