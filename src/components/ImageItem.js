@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import styled from '@emotion/styled';
 
 const ImageItemStyled = styled.div`
-
-
-  }
   .image {
     opacity: 0;
   }
@@ -26,8 +23,7 @@ export class ImageItem extends Component {
     return (
       <ImageItemStyled>
         {image.isPlaceholder ? (
-          <div className="image-placeholder">
-          </div>
+          <div className="image-placeholder" />
         ) : (
           <img
             className="image"

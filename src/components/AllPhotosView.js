@@ -3,10 +3,10 @@ import { inject, observer } from 'mobx-react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
 import { ImageList } from './ImageList';
-
-const MIN_LIST_WIDTH = 300;
-const LIST_MARGIN = 6;
-const MIN_COLUMN_WIDTH = MIN_LIST_WIDTH + 2 * LIST_MARGIN;
+import {
+  LIST_MARGIN,
+  MIN_COLUMN_WIDTH,
+} from '../global/constants';
 
 const AllPhotosViewStyled = styled.div`
   .image-list-container {
@@ -22,11 +22,6 @@ const AllPhotosViewStyled = styled.div`
     flex-basis: 50%;
     padding: 0;
     margin: 0 ${LIST_MARGIN}px;
-  }
-
-  .image-list--item {
-    background: lightgray;
-    margin: ${LIST_MARGIN}px 0;
   }
 
   .image {
@@ -61,24 +56,12 @@ export class AllPhotosView extends Component {
       return minHeight;
     }
     return 0;
-  }
+  };
 
   onScroll = () => {
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
-    const screenHeight = document.documentElement.scrollHeight;
-
-    // /* have at least one screen height's worth of images prepared */
-    // const isAtLeastOneMoreScreenLoaded =
-    //   screenHeight >= window.innerHeight * 2 + scrollPosition;
-
-    // /* make sure none of the columns ends before the end of the screen */
-    // const columnHeightDifferencesSmallerThanScreen =
-    //   this.getMaxColumnHeightDiff() < screenHeight;
-    console.log(this.getMinColumnHeight());
-    if (
-      this.getMinColumnHeight() < 2 * window.innerHeight + scrollPosition
-    ) {
+    if (this.getMinColumnHeight() < window.innerHeight + scrollPosition) {
       this.props.requestMoreImages(16);
     }
   };
