@@ -16,7 +16,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={399}
+      height={300}
       image="https://cdn.shibe.online/shibes/1e9697f176056366cd08e1c5b3cc1d4bfa1554a3.jpg"
     />
   </li>
@@ -40,7 +40,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={399}
+      height={225}
       image="https://cdn.shibe.online/shibes/0e97728f0f6b89a537857abb6feb52e9a4134bb7.jpg"
     />
   </li>
@@ -48,7 +48,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={300}
+      height={399}
       image="https://cdn.shibe.online/shibes/c47efb2e647912a9045ffaec969a5a0c936d039a.jpg"
     />
   </li>
@@ -56,7 +56,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={300}
+      height={225}
       image="https://cdn.shibe.online/shibes/9428b8808f7a1a557d8d0bcfa97bff4784734e6b.jpg"
     />
   </li>
@@ -64,7 +64,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={399}
+      height={300}
       image="https://cdn.shibe.online/shibes/e3365cd1d7b2ebc4f71a64641ee81410bbffce7d.jpg"
     />
   </li>
@@ -72,7 +72,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={399}
+      height={300}
       image="https://cdn.shibe.online/shibes/b731401ef700ed945177a5b50eadb847c85315b9.jpg"
     />
   </li>
@@ -80,7 +80,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={225}
+      height={300}
       image="https://cdn.shibe.online/shibes/72e5d308c1fa15e8f3c6ceadbe846ff363e87245.jpg"
     />
   </li>
@@ -96,7 +96,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={300}
+      height={225}
       image="https://cdn.shibe.online/shibes/4c779def35f0ca6d99f85a40468aa038d8968f51.jpg"
     />
   </li>
@@ -104,7 +104,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={300}
+      height={399}
       image="https://cdn.shibe.online/shibes/50e15ff12da0450585df2f8d9983d039311f1ab6.jpg"
     />
   </li>
@@ -120,7 +120,7 @@ exports[`ImageList matches snapshot 1`] = `
     className="image-list--item"
   >
     <inject-ImageItem
-      height={399}
+      height={225}
       image="https://cdn.shibe.online/shibes/2616df5efde79c521d28020e10cc90942dc249af.jpg"
     />
   </li>
