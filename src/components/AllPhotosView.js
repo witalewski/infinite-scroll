@@ -12,6 +12,7 @@ const AllPhotosViewStyled = styled.div`
   .image-list-container {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
   }
 
   .image-list {
@@ -49,20 +50,40 @@ export class AllPhotosView extends Component {
       actualColumnWidth: 0,
     };
   }
-  onScroll = () => {
-    const { requestMoreImages } = this.props;
-    const scrollPosition =
-      window.pageYOffset || document.documentElement.scrollTop;
-    /* always have one more screen loaded */
-    if (
-      document.documentElement.scrollHeight <
-      window.innerHeight * 2 + scrollPosition
-    ) {
-      requestMoreImages(16);
+
+  getMinColumnHeight = () => {
+    const columns = this.listContainerRef.current.childNodes;
+    if (columns && columns.length > 0) {
+      let minHeight = Infinity;
+      for (let i = 0; i < columns.length; i++) {
+        minHeight = Math.min(minHeight, columns[i].clientHeight);
+      }
+      return minHeight;
     }
+    return 0;
   }
 
-  onResize  = () => {
+  onScroll = () => {
+    const scrollPosition =
+      window.pageYOffset || document.documentElement.scrollTop;
+    const screenHeight = document.documentElement.scrollHeight;
+
+    // /* have at least one screen height's worth of images prepared */
+    // const isAtLeastOneMoreScreenLoaded =
+    //   screenHeight >= window.innerHeight * 2 + scrollPosition;
+
+    // /* make sure none of the columns ends before the end of the screen */
+    // const columnHeightDifferencesSmallerThanScreen =
+    //   this.getMaxColumnHeightDiff() < screenHeight;
+    console.log(this.getMinColumnHeight());
+    if (
+      this.getMinColumnHeight() < 2 * window.innerHeight + scrollPosition
+    ) {
+      this.props.requestMoreImages(16);
+    }
+  };
+
+  onResize = () => {
     const columnsCount = Math.floor(
       this.listContainerRef.current.clientWidth / MIN_COLUMN_WIDTH
     );
@@ -73,7 +94,7 @@ export class AllPhotosView extends Component {
       columnsCount,
       actualColumnWidth,
     });
-  }
+  };
 
   componentDidMount() {
     if (!this.state.initialized) {
