@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/infinite-scroll">
     <App />
   </BrowserRouter>,
   document.getElementById('root')
