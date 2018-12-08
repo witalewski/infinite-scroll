@@ -16,8 +16,6 @@ const FavouritesButtonStyled = styled.button`
   background: rgba(255, 255, 255, 0.8);
   border: none;
 
-  transition: opacity 0.5s;
-
   &.btn--hidden {
     opacity: 0;
   }

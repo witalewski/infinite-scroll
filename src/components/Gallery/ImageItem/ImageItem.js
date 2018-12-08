@@ -49,10 +49,12 @@ export class ImageItem extends Component {
 
   addCurrentImageToFavourites = () => {
     this.props.addToFavourites(this.props.image);
+    this.setState({mouseOver:false});
   };
 
   removeCurrentImageFromFavourites = () => {
     this.props.removeFromFavourites(this.props.image);
+    this.setState({mouseOver:false});
   };
 
   render() {
