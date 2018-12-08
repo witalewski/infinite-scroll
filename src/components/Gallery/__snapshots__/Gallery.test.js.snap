@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gallery matches snapshot 1`] = `
+<ForwardRef(render)>
+  <GalleryTitle
+    title="Test Gallery"
+  />
+  <div
+    className="row"
+  >
+    <div
+      className="col image-list-container"
+    >
+      Immutable.List []
+    </div>
+  </div>
+</ForwardRef(render)>
+`;

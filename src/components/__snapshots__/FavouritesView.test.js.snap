@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouritesView matches snapshot 1`] = `
+<Gallery
+  images={
+    Array [
+      "https://cdn.shibe.online/shibes/72e5d308c1fa15e8f3c6ceadbe846ff363e87245.jpg",
+      "https://cdn.shibe.online/shibes/b731401ef700ed945177a5b50eadb847c85315b9.jpg",
+      "https://cdn.shibe.online/shibes/8047547e25c8cdd6bf562e4c42dfa5afb9e8bdd6.jpg",
+      "https://cdn.shibe.online/shibes/e3365cd1d7b2ebc4f71a64641ee81410bbffce7d.jpg",
+      "https://cdn.shibe.online/shibes/0e97728f0f6b89a537857abb6feb52e9a4134bb7.jpg",
+      "https://cdn.shibe.online/shibes/a76326e2aab82d76aaada4a5d119a0a4e6b1c068.jpg",
+      "https://cdn.shibe.online/shibes/2616df5efde79c521d28020e10cc90942dc249af.jpg",
+      "https://cdn.shibe.online/shibes/515551501802df0bb043f791a395797a5e144f93.jpg",
+      "https://cdn.shibe.online/shibes/9428b8808f7a1a557d8d0bcfa97bff4784734e6b.jpg",
+      "https://cdn.shibe.online/shibes/1e9697f176056366cd08e1c5b3cc1d4bfa1554a3.jpg",
+      "https://cdn.shibe.online/shibes/42eaa84a993fd3f7628e9ed4bcca2fb6ab25af66.jpg",
+      "https://cdn.shibe.online/shibes/4c779def35f0ca6d99f85a40468aa038d8968f51.jpg",
+      "https://cdn.shibe.online/shibes/379549639744fa22e142138817f687cfe97c7aee.jpg",
+      "https://cdn.shibe.online/shibes/752cdf1654b0c32427dbb070066edff6d19e940b.jpg",
+      "https://cdn.shibe.online/shibes/c47efb2e647912a9045ffaec969a5a0c936d039a.jpg",
+      "https://cdn.shibe.online/shibes/50e15ff12da0450585df2f8d9983d039311f1ab6.jpg",
+    ]
+  }
+  title="Favourites"
+/>
+`;

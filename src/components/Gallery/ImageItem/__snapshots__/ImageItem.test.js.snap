@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageItem matches snapshot for favourite image 1`] = `
+<ForwardRef(render)
+  onClick={[Function]}
+  onMouseOut={[Function]}
+  onMouseOver={[Function]}
+  style={
+    Object {
+      "height": 400,
+    }
+  }
+>
+  <img
+    alt="Shibe dog"
+    className="image false"
+    decoding="async"
+    onLoad={[Function]}
+    src="https://cdn.shibe.online/shibes/8047547e25c8cdd6bf562e4c42dfa5afb9e8bdd6.jpg"
+  />
+  <FavouritesButton
+    isFavourite={true}
+    visible={false}
+  />
+  <FavouritesIndicator
+    isFavourite={true}
+  />
+</ForwardRef(render)>
+`;
+
+exports[`ImageItem matches snapshot for non-favourite image 1`] = `
+<ForwardRef(render)
+  onClick={[Function]}
+  onMouseOut={[Function]}
+  onMouseOver={[Function]}
+  style={
+    Object {
+      "height": 400,
+    }
+  }
+>
+  <img
+    alt="Shibe dog"
+    className="image false"
+    decoding="async"
+    onLoad={[Function]}
+    src="https://cdn.shibe.online/shibes/8047547e25c8cdd6bf562e4c42dfa5afb9e8bdd6.jpg"
+  />
+  <FavouritesButton
+    isFavourite={false}
+    visible={false}
+  />
+  <FavouritesIndicator
+    isFavourite={false}
+  />
+</ForwardRef(render)>
+`;

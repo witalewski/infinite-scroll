@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GalleryTitle matches snapshot 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="col"
+  >
+    <h1>
+      Test Gallery
+    </h1>
+  </div>
+</div>
+`;

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouritesButton matches snapshot for favourite 1`] = `
+<ForwardRef(render)
+  className="btn btn-light false"
+  type="button"
+>
+  💔
+</ForwardRef(render)>
+`;
+
+exports[`FavouritesButton matches snapshot for non-favourite 1`] = `
+<ForwardRef(render)
+  className="btn btn-light false"
+  type="button"
+>
+  ❤️
+</ForwardRef(render)>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar matches snapshot 1`] = `
+<nav
+  className="navbar sticky-top navbar-light bg-light navbar-expand"
+>
+  <a
+    className="navbar-brand"
+    href="/"
+  >
+    Infinite Scroll Demo
+  </a>
+  <div
+    className="collapse navbar-collapse"
+  >
+    <ul
+      className="navbar-nav"
+    >
+      <li
+        className="nav-item active"
+      >
+        <Link
+          className="nav-link"
+          replace={false}
+          to="/"
+        >
+          New Photos
+        </Link>
+      </li>
+      <li
+        className="nav-item false"
+      >
+        <Link
+          className="nav-link"
+          replace={false}
+          to="/favourites"
+        >
+          Favourites (16)
+        </Link>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouritesIndicator matches snapshot for favourite 1`] = `
+<ForwardRef(render)
+  className="favourites-indicator false"
+>
+  <span
+    aria-label="favourite"
+    role="img"
+  >
+    ❤️
+  </span>
+</ForwardRef(render)>
+`;
+
+exports[`FavouritesIndicator matches snapshot for non-favourite 1`] = `
+<ForwardRef(render)
+  className="favourites-indicator favourites-indicator--hidden"
+>
+  <span
+    aria-label="favourite"
+    role="img"
+  >
+    ❤️
+  </span>
+</ForwardRef(render)>
+`;
