@@ -2,10 +2,11 @@ import React, { Component, createRef } from 'react';
 import { inject, observer } from 'mobx-react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
+import {ImageList} from './ImageList';
 
-const LIST_WIDTH = 300;
+const MIN_LIST_WIDTH = 300;
 const LIST_MARGIN = 6;
-const COLUMN_WIDTH = LIST_WIDTH + 2 * LIST_MARGIN;
+const MIN_COLUMN_WIDTH = MIN_LIST_WIDTH + 2 * LIST_MARGIN;
 
 const AllPhotosViewStyled = styled.div`
   .image-list-container {
@@ -45,10 +46,10 @@ export class AllPhotosView extends Component {
     this.state = {
       initialized: false,
       columnsCount: 0,
-      columnWidth: 0,
+      actualColumnWidth: 0,
     };
   }
-  loadImageURLsIfNeeded() {
+  onScroll() {
     const { requestMoreImages } = this.props;
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
@@ -61,26 +62,28 @@ export class AllPhotosView extends Component {
     }
   }
 
-  updateColumnsCount() {
+  onResize() {
     const columnsCount = Math.floor(
-      this.listContainerRef.current.clientWidth / COLUMN_WIDTH
+      this.listContainerRef.current.clientWidth / MIN_COLUMN_WIDTH
     );
-    const columnWidth =
+    const actualColumnWidth =
       this.listContainerRef.current.clientWidth / columnsCount -
       2 * LIST_MARGIN;
     this.setState({
       columnsCount,
-      columnWidth,
+      actualColumnWidth,
     });
   }
 
   componentDidMount() {
     if (!this.state.initialized) {
-      window.addEventListener('scroll', this.loadImageURLsIfNeeded.bind(this));
-      window.addEventListener('resize', this.updateColumnsCount.bind(this));
-      this.loadImageURLsIfNeeded();
+      window.addEventListener('scroll', this.onScroll.bind(this));
+      window.addEventListener('resize', this.onResize.bind(this));
 
-      this.updateColumnsCount();
+      //invoke at once to get initial values
+      this.onScroll();
+      this.onResize();
+
       this.setState({ initialized: true });
     }
   }
@@ -90,7 +93,7 @@ export class AllPhotosView extends Component {
   }
 
   render() {
-    const { columnsCount, columnWidth } = this.state;
+    const { columnsCount, actualColumnWidth } = this.state;
     const { images } = this.props;
     const imagesByColumn = List(Range(0, columnsCount).map(_ => []));
     if (columnsCount) {
@@ -102,29 +105,7 @@ export class AllPhotosView extends Component {
       <AllPhotosViewStyled className="row">
         <div className="col image-list-container" ref={this.listContainerRef}>
           {imagesByColumn.map((list, i) => (
-            <ul key={`list-${i}-of-${columnsCount}`} className="image-list">
-              {list.map((image, i) => (
-                <li
-                  className="image-list--item"
-                  key={`${image.url || 'placeholder'}-${i}`}
-                  style={{
-                    minHeight: columnWidth * image.placeholderHeightRatio,
-                  }}
-                >
-                  {image.isPlaceholder ? (
-                    <div className="image-placeholder" />
-                  ) : (
-                    <img
-                      className="image"
-                      alt="Shibe dog"
-                      src={image.url}
-                      decoding="async"
-                      onLoad={this.onImageLoad}
-                    />
-                  )}
-                </li>
-              ))}
-            </ul>
+            <ImageList key={`list-${i}-of-${columnsCount}`} list={list} columnWidth={actualColumnWidth}/>
           ))}
         </div>
       </AllPhotosViewStyled>
