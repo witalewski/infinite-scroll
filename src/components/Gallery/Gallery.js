@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
 import { ImageList } from './ImageList';
+import { GalleryTitle } from './GalleryTitle';
 import { LIST_MARGIN, MIN_COLUMN_WIDTH } from '../../global/constants';
 
 const PhotosViewStyled = styled.div`
@@ -19,16 +20,6 @@ const PhotosViewStyled = styled.div`
     padding: 0;
     margin: 0 ${LIST_MARGIN}px;
   }
-
-  .image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .image-placeholder {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 export class Gallery extends Component {
@@ -44,83 +35,76 @@ export class Gallery extends Component {
 
   getMinColumnHeight = () => {
     const columns = this.listContainerRef.current.childNodes;
+    let minHeight = Infinity;
     if (columns && columns.length > 0) {
-      let minHeight = Infinity;
       for (let i = 0; i < columns.length; i++) {
         minHeight = Math.min(minHeight, columns[i].clientHeight);
       }
-      return minHeight;
+    } else {
+      minHeight = 0;
     }
-    return 0;
+    return minHeight;
   };
 
   onScroll = () => {
-    const scrollPosition =
-      window.pageYOffset || document.documentElement.scrollTop;
-    if (this.getMinColumnHeight() < window.innerHeight + scrollPosition) {
+    const scroll = window.pageYOffset || document.documentElement.scrollTop;
+    this.getMinColumnHeight() < window.innerHeight + scroll &&
       this.props.requestMoreImages();
-    }
   };
 
   onResize = () => {
-    const columnsCount = Math.floor(
-      this.listContainerRef.current.clientWidth / MIN_COLUMN_WIDTH
-    );
-    const actualColumnWidth =
-      this.listContainerRef.current.clientWidth / columnsCount -
-      2 * LIST_MARGIN;
+    const containerWidth = this.listContainerRef.current.clientWidth;
+    const columnsCount = Math.floor(containerWidth / MIN_COLUMN_WIDTH);
+    const columnWidth = containerWidth / columnsCount - 2 * LIST_MARGIN;
     this.setState({
       columnsCount,
-      actualColumnWidth,
+      columnWidth,
     });
   };
 
+  setupResizeHandlers() {
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
+  }
+
+  setupScrollHandlers() {
+    window.addEventListener('scroll', this.onScroll);
+    this.onScroll();
+  }
+
   componentDidMount() {
     if (!this.state.initialized) {
-      window.addEventListener('resize', this.onResize);
-      this.onResize();
-
-      if (this.props.infinite) {
-        window.addEventListener('scroll', this.onScroll);
-        this.onScroll();
-      }
-
+      this.setupResizeHandlers();
+      this.props.infinite && this.setupScrollHandlers();
       this.setState({ initialized: true });
     }
   }
-
   componentWillUnmount() {
-    window.removeEventListener('resize',this.onResize);
-
-    if (this.props.infinite) {
-      window.removeEventListener('scroll', this.onScroll);
-    }
+    window.removeEventListener('resize', this.onResize);
+    this.props.infinite && window.removeEventListener('scroll', this.onScroll);
   }
 
   render() {
-    const { columnsCount, actualColumnWidth } = this.state;
+    const { columnsCount, columnWidth } = this.state;
     const { images, title } = this.props;
     const imagesByColumn = List(Range(0, columnsCount).map(_ => []));
-    
-    if (columnsCount && actualColumnWidth) {
+
+    if (columnsCount && columnWidth) {
       images.forEach((elem, i) => {
-        imagesByColumn.get(i % columnsCount).push(elem)
+        imagesByColumn.get(i % columnsCount).push(elem);
       });
     }
+
     return (
       <PhotosViewStyled>
-        <div className="row">
-          <div className="col">
-          <h1>{title}</h1>
-          </div>
-        </div>
+        <GalleryTitle title={title} />
         <div className="row">
           <div className="col image-list-container" ref={this.listContainerRef}>
             {imagesByColumn.map((list, i) => (
               <ImageList
                 key={`list-${i}-of-${columnsCount}`}
                 list={list}
-                columnWidth={actualColumnWidth}
+                columnWidth={columnWidth}
               />
             ))}
           </div>

@@ -3,15 +3,25 @@ import { observer, inject } from 'mobx-react';
 import styled from '@emotion/styled';
 import { FavouritesIndicator } from './FavouritesIndicator';
 import { FavouritesButton } from './FavouritesButton';
+import { LIST_MARGIN } from '../../../global/constants';
+import loadingGif from '../../../assets/loading.gif';
 
 const ImageItemStyled = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  margin: ${LIST_MARGIN}px 0;
+  transition: height 0.2s;
 
   cursor: pointer;
 
+  background-image: url(${loadingGif});
+  background-color: lightgray;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: multiply;
+
   .image {
+    width: 100%;
     opacity: 0;
     position: absolute;
   }
@@ -40,21 +50,19 @@ export class ImageItem extends Component {
   };
 
   onMouseOut = () => {
-    if (!this.state.message) {
-      this.setState({
-        mouseOver: false,
-      });
-    }
+    this.setState({
+      mouseOver: false,
+    });
   };
 
   addCurrentImageToFavourites = () => {
     this.props.addToFavourites(this.props.image);
-    this.setState({mouseOver:false});
+    this.setState({ mouseOver: false });
   };
 
   removeCurrentImageFromFavourites = () => {
     this.props.removeFromFavourites(this.props.image);
-    this.setState({mouseOver:false});
+    this.setState({ mouseOver: false });
   };
 
   render() {
