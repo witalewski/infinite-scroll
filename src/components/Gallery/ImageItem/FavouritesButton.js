@@ -27,7 +27,7 @@ export const FavouritesButton = ({ visible, isFavourite, onButtonClick }) => (
   <FavouritesButtonStyled
     className={`btn btn-light ${!visible && 'btn--hidden'}`}
     type="button"
-    onClick={onButtonClick}
+
   >
     {isFavourite ? '💔' : '❤️'}
   </FavouritesButtonStyled>

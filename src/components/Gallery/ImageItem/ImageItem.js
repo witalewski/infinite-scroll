@@ -9,6 +9,8 @@ const ImageItemStyled = styled.div`
   width: 100%;
   height: 100%;
 
+  cursor: pointer;
+
   .image {
     opacity: 0;
     position: absolute;
@@ -28,12 +30,6 @@ export class ImageItem extends Component {
       mouseOver: false,
       imageHeight: 0,
     };
-  }
-
-  componentWillUnmount() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
   }
   onImageLoad = ({ target }) => {
     this.setState({ isImageLoaded: true, imageHeight: target.clientHeight });
@@ -68,6 +64,11 @@ export class ImageItem extends Component {
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
         style={{ height: imageHeight || this.props.height }}
+        onClick={
+          isFavourite
+            ? this.removeCurrentImageFromFavourites
+            : this.addCurrentImageToFavourites
+        }
       >
         {image && (
           <img
@@ -78,15 +79,7 @@ export class ImageItem extends Component {
             onLoad={this.onImageLoad}
           />
         )}
-        <FavouritesButton
-          visible={mouseOver}
-          isFavourite={isFavourite}
-          onButtonClick={
-            isFavourite
-              ? this.removeCurrentImageFromFavourites
-              : this.addCurrentImageToFavourites
-          }
-        />
+        <FavouritesButton visible={mouseOver} isFavourite={isFavourite} />
         <FavouritesIndicator isFavourite={isFavourite} />
       </ImageItemStyled>
     );
