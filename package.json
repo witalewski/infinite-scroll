@@ -68,7 +68,9 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --coverage --coverageReporters=text-lcov | coveralls",
-    "test-watch": "node scripts/test.js --coverage --watch"
+    "test-watch": "node scripts/test.js --coverage --watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -136,6 +138,10 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.1.6",
     "@babel/plugin-transform-react-jsx-source": "^7.0.0",
-    "coveralls": "^3.0.2"
+    "coveralls": "^3.0.2",
+    "@storybook/react": "^4.0.12",
+    "@storybook/addon-actions": "^4.0.12",
+    "@storybook/addon-links": "^4.0.12",
+    "@storybook/addons": "^4.0.12"
   }
 }
