@@ -2,10 +2,7 @@ import React, { Component, createRef } from 'react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
 import { ImageList } from './ImageList';
-import {
-  LIST_MARGIN,
-  MIN_COLUMN_WIDTH,
-} from '../global/constants';
+import { LIST_MARGIN, MIN_COLUMN_WIDTH } from '../global/constants';
 
 const PhotosViewStyled = styled.div`
   .image-list-container {
@@ -80,36 +77,53 @@ export class Gallery extends Component {
 
   componentDidMount() {
     if (!this.state.initialized) {
-      window.addEventListener('scroll', this.onScroll);
       window.addEventListener('resize', this.onResize);
-
-      //invoke at once to get initial values
-      this.onScroll();
       this.onResize();
+
+      if (this.props.infinite) {
+        window.addEventListener('scroll', this.onScroll);
+        this.onScroll();
+      }
 
       this.setState({ initialized: true });
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize',this.onResize);
+
+    if (this.props.infinite) {
+      window.removeEventListener('scroll', this.onScroll);
+    }
+  }
+
   render() {
     const { columnsCount, actualColumnWidth } = this.state;
-    const { images } = this.props;
+    const { images, title } = this.props;
     const imagesByColumn = List(Range(0, columnsCount).map(_ => []));
-    if (columnsCount) {
-      images.forEach((elem, i) =>
+    
+    if (columnsCount && actualColumnWidth) {
+      images.forEach((elem, i) => {
         imagesByColumn.get(i % columnsCount).push(elem)
-      );
+      });
     }
     return (
-      <PhotosViewStyled className="row">
-        <div className="col image-list-container" ref={this.listContainerRef}>
-          {imagesByColumn.map((list, i) => (
-            <ImageList
-              key={`list-${i}-of-${columnsCount}`}
-              list={list}
-              columnWidth={actualColumnWidth}
-            />
-          ))}
+      <PhotosViewStyled>
+        <div className="row">
+          <div className="col">
+          <h1>{title}</h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col image-list-container" ref={this.listContainerRef}>
+            {imagesByColumn.map((list, i) => (
+              <ImageList
+                key={`list-${i}-of-${columnsCount}`}
+                list={list}
+                columnWidth={actualColumnWidth}
+              />
+            ))}
+          </div>
         </div>
       </PhotosViewStyled>
     );

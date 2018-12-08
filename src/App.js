@@ -5,7 +5,7 @@ import { AppState } from './AppState';
 import { Switch, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import NewPhotosView from './components/NewPhotosView';
-import { FavouritesView } from './components/FavouritesView';
+import FavouritesView from './components/FavouritesView';
 
 const AppStyled = styled.div`
   .main {

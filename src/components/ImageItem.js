@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@emotion/styled';
 
@@ -75,6 +75,7 @@ export class ImageItem extends Component {
       message: '',
       primaryButtonVisible: false,
     };
+    this.imageRef = createRef();
   }
   onImageLoad({ target }) {
     target.classList.add('image--loaded');
@@ -97,7 +98,11 @@ export class ImageItem extends Component {
   };
 
   addToFavourites = () => {
-    this.props.addToFavourites(this.props.image.url);
+    const image = this.imageRef.current;
+    this.props.addToFavourites({
+        url: this.props.image.url,
+        placeholderHeightRatio: image.clientHeight / image.clientWidth,
+      });
     this.setState({
       message: 'Added to favourites!',
       undoAction: this.removeFromFavourites,
@@ -117,7 +122,11 @@ export class ImageItem extends Component {
   };
 
   removeFromFavourites = () => {
-    this.props.removeFromFavourites(this.props.image.url);
+    const image = this.imageRef.current;
+    this.props.removeFromFavourites({
+      url: this.props.image.url,
+      placeholderHeightRatio: image.clientHeight / image.clientWidth,
+    });
     this.setState({
       message: 'Removed from favourites.',
       undoAction: this.addToFavourites,
@@ -149,6 +158,7 @@ export class ImageItem extends Component {
           <div className="image-placeholder" />
         ) : (
           <img
+            ref={this.imageRef}
             className="image"
             alt="Shibe dog"
             src={image.url}
