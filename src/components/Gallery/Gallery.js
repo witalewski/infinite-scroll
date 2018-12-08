@@ -58,7 +58,7 @@ export class Gallery extends Component {
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
     if (this.getMinColumnHeight() < window.innerHeight + scrollPosition) {
-      this.props.requestMoreImages(16);
+      this.props.requestMoreImages();
     }
   };
 

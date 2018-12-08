@@ -5,6 +5,8 @@ import {
   storeFavouritesCookie,
   readFavouritesCookie,
 } from './utils/cookieUtil';
+import { BATCH_SIZE } from './global/constants'
+;
 class AppState {
   @observable imageURLs = [];
   @observable placeholdersCount = 0;
@@ -44,7 +46,7 @@ class AppState {
   }
 
   @action
-  requestMoreImages = count => {
+  requestMoreImages = (count = BATCH_SIZE) => {
     this.setPlaceholdersCount(this.placeholdersCount + count);
     getImageURLs(count).then(({ data }) => {
       this.setPlaceholdersCount(this.placeholdersCount - count);
