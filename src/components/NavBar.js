@@ -2,12 +2,15 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 export const NavBar = ({ location, favourites }) => (
-  <nav className="navbar sticky-top navbar-light bg-light navbar-expand">
+  <nav className="navbar sticky-top navbar-dark bg-dark navbar-expand-sm">
     <a className="navbar-brand" href="/">
-      Infinite Scroll
+      Infinite Scroll Demo
     </a>
-    <div className="collapse navbar-collapse">
-      <ul className="navbar-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul className="navbar-nav ">
         {[
           { label: 'New Photos', path: '/' },
           { label: `Favourites (${favourites.size})`, path: '/favourites' },
