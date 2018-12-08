@@ -1,10 +1,16 @@
 import { observable, action, computed } from 'mobx';
-import { Range } from 'immutable';
+import { Range, Set } from 'immutable';
 import { getImageURLs } from './api/shibeAPI';
-import {placeholderHeightGenerator} from './utils/placeholderHeightGenerator';
+import { placeholderHeightGenerator } from './utils/placeholderHeightGenerator';
+import {
+  storeFavouritesCookie,
+  readFavouritesCookie,
+} from './utils/cookieUtil';
 class AppState {
   @observable imageURLs = [];
   @observable placeholdersCount = 0;
+
+  @observable favourites = new Set(readFavouritesCookie() || []);
 
   @action
   setImageURLs = imageURLs => {
@@ -19,12 +25,25 @@ class AppState {
     this.placeholdersCount = placeholdersCount;
   };
 
-  
+  @action setFavourites = favourites => {
+    this.favourites = favourites;
+    storeFavouritesCookie(favourites);
+  };
+  @action addToFavourites = favourite => {
+    this.setFavourites(this.favourites.add(favourite));
+  };
+
+  @action removeFromFavourites = favourite => {
+    this.setFavourites(this.favourites.delete(favourite));
+  };
 
   @computed get images() {
     return [
       ...this.imageURLs,
-      ...Range(0, this.placeholdersCount).map(_ => ({ isPlaceholder: true, placeholderHeightRatio: placeholderHeightGenerator.next() })),
+      ...Range(0, this.placeholdersCount).map(_ => ({
+        isPlaceholder: true,
+        placeholderHeightRatio: placeholderHeightGenerator.next(),
+      })),
     ];
   }
 
@@ -33,7 +52,13 @@ class AppState {
     this.setPlaceholdersCount(this.placeholdersCount + count);
     getImageURLs(count).then(({ data }) => {
       this.setPlaceholdersCount(this.placeholdersCount - count);
-      this.addImageURLs(data.map(url => ({ url, isPlaceholder: false, placeholderHeightRatio: placeholderHeightGenerator.next()})));
+      this.addImageURLs(
+        data.map(url => ({
+          url,
+          isPlaceholder: false,
+          placeholderHeightRatio: placeholderHeightGenerator.next(),
+        }))
+      );
     });
   };
 }

@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-export const NavBar = ({ items, location }) => (
+import { inject, observer } from 'mobx-react';
+export const NavBar = ({ location, favourites }) => (
   <nav className="navbar sticky-top navbar-light bg-light navbar-expand">
     <a className="navbar-brand" href="/">
       Infinite Scroll Demo
     </a>
     <div className="collapse navbar-collapse">
       <ul className="navbar-nav">
-        {items.map(item => (
+        {[
+          { label: 'New Photos', path: '/' },
+          { label: `Favourites (${favourites.size})`, path: '/favourites' },
+        ].map(item => (
           <li
             key={item.label}
             className={`nav-item ${location.pathname === item.path &&
@@ -23,4 +27,8 @@ export const NavBar = ({ items, location }) => (
   </nav>
 );
 
-export default withRouter(NavBar);
+export default withRouter(
+  inject(({ appState }) => ({
+    favourites: appState.favourites,
+  }))(observer(NavBar))
+);

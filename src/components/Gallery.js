@@ -1,5 +1,4 @@
 import React, { Component, createRef } from 'react';
-import { inject, observer } from 'mobx-react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
 import { ImageList } from './ImageList';
@@ -8,7 +7,7 @@ import {
   MIN_COLUMN_WIDTH,
 } from '../global/constants';
 
-const AllPhotosViewStyled = styled.div`
+const PhotosViewStyled = styled.div`
   .image-list-container {
     display: flex;
     justify-content: center;
@@ -35,7 +34,7 @@ const AllPhotosViewStyled = styled.div`
   }
 `;
 
-export class AllPhotosView extends Component {
+export class Gallery extends Component {
   constructor(props) {
     super(props);
     this.listContainerRef = createRef();
@@ -102,7 +101,7 @@ export class AllPhotosView extends Component {
       );
     }
     return (
-      <AllPhotosViewStyled className="row">
+      <PhotosViewStyled className="row">
         <div className="col image-list-container" ref={this.listContainerRef}>
           {imagesByColumn.map((list, i) => (
             <ImageList
@@ -112,12 +111,7 @@ export class AllPhotosView extends Component {
             />
           ))}
         </div>
-      </AllPhotosViewStyled>
+      </PhotosViewStyled>
     );
   }
 }
-
-export default inject(({ appState }) => ({
-  images: appState.images,
-  requestMoreImages: appState.requestMoreImages,
-}))(observer(AllPhotosView));

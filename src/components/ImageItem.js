@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 import styled from '@emotion/styled';
 
 const ImageItemStyled = styled.div`
@@ -30,7 +31,7 @@ const ImageItemStyled = styled.div`
 
     background: rgba(255, 255, 255, 0.9);
 
-    transition: opacity 0.5s 0.2s;
+    transition: opacity 0.2s;
     transform: translateY(-50%);
   }
 
@@ -53,6 +54,17 @@ const ImageItemStyled = styled.div`
   .message--hidden {
     display: none;
   }
+
+  .favourites-indicator {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    transition: opacity 0.5s 0.2s;
+  }
+
+  .favourites-indicator--hidden {
+    opacity: 0;
+  }
 `;
 
 export class ImageItem extends Component {
@@ -61,6 +73,7 @@ export class ImageItem extends Component {
     this.state = {
       mouseOver: false,
       message: '',
+      primaryButtonVisible: false,
     };
   }
   onImageLoad({ target }) {
@@ -84,6 +97,7 @@ export class ImageItem extends Component {
   };
 
   addToFavourites = () => {
+    this.props.addToFavourites(this.props.image.url);
     this.setState({
       message: 'Added to favourites!',
       undoAction: this.removeFromFavourites,
@@ -97,11 +111,13 @@ export class ImageItem extends Component {
         message: '',
         undoVisible: false,
         undoAction: null,
+        primaryButtonVisible: false,
       });
     }, 2000);
   };
 
   removeFromFavourites = () => {
+    this.props.removeFromFavourites(this.props.image.url);
     this.setState({
       message: 'Removed from favourites.',
       undoAction: this.addToFavourites,
@@ -115,13 +131,15 @@ export class ImageItem extends Component {
         message: '',
         undoVisible: false,
         undoAction: null,
+        primaryButtonVisible: false,
       });
     }, 2000);
   };
 
   render() {
-    const { image } = this.props;
+    const { image, favourites } = this.props;
     const { mouseOver } = this.state;
+    const isFavourite = favourites.includes(image.url);
     return (
       <ImageItemStyled
         onMouseOver={this.onMouseOver}
@@ -143,9 +161,11 @@ export class ImageItem extends Component {
             type="button"
             className={`btn btn-outline-primary primary-button ${this.state
               .message && 'primary-button--hidden'}`}
-            onClick={this.addToFavourites}
+            onClick={
+              isFavourite ? this.removeFromFavourites : this.addToFavourites
+            }
           >
-            Add to Favourites
+            {isFavourite ? '💔 Remove from Favourites' : '❤️ Add to Favourites'}
           </button>
           <div
             className={`message ${!this.state.message && 'message--hidden'}`}
@@ -153,14 +173,29 @@ export class ImageItem extends Component {
             <span>{this.state.message}</span>
             <button
               type="button"
-              class="btn btn-secondary btn-sm"
+              className="btn btn-secondary btn-sm"
               onClick={this.state.undoAction}
             >
               Undo
             </button>
           </div>
         </div>
+        <div
+          className={`favourites-indicator ${!isFavourite &&
+            'favourites-indicator--hidden'}`}
+        >
+          <span role="img" aria-label="favourite">
+            ❤️
+          </span>
+          ️
+        </div>
       </ImageItemStyled>
     );
   }
 }
+
+export default inject(({ appState }) => ({
+  favourites: appState.favourites,
+  addToFavourites: appState.addToFavourites,
+  removeFromFavourites: appState.removeFromFavourites,
+}))(observer(ImageItem));
