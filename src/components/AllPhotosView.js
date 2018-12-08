@@ -10,18 +10,20 @@ const AllPhotosViewStyled = styled.div`
     flex-wrap: wrap;
   }
 
+  .image-list--item {
+    background: lightgray;
+    margin: 6px;
+  }
+
   .image {
     width: 300px;
     height: 400px;
     object-fit: cover;
-    margin: 6px;
   }
 
   .image-placeholder {
-    background: lightgray;
     width: 300px;
     height: 400px;
-    margin: 6px;
   }
 `;
 
@@ -34,15 +36,15 @@ export class AllPhotosView extends Component {
     };
   }
   loadImageURLsIfNeeded() {
-    const { isLoadingImageURLs, loadImageURLs } = this.props;
+    const { requestMoreImages } = this.props;
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
+    /* always have one more screen loaded */
     if (
-      !isLoadingImageURLs &&
-      this.listRef.current &&
-      this.listRef.current.clientHeight < window.innerHeight + scrollPosition
+      document.documentElement.scrollHeight <
+      window.innerHeight * 2 + scrollPosition
     ) {
-      loadImageURLs(16);
+      requestMoreImages(16);
     }
   }
 
@@ -55,24 +57,25 @@ export class AllPhotosView extends Component {
   }
 
   render() {
-    const imagesToDisplay = this.props.imageURLs.map(imageURL => ({
-      url: imageURL,
-      isPlaceholder: false,
-    }));
-    if (this.props.isLoadingImageURLs) {
-      Range(0, 16).forEach(i => imagesToDisplay.push({ isPlaceholder: true }));
-    }
-
+    console.log(this.props.images);
     return (
       <AllPhotosViewStyled className="row">
         <div className="col">
           <ul className="image-list" ref={this.listRef}>
-            {imagesToDisplay.map((image, i) => (
-              <li key={`${image.url || 'placeholder'}-${i}`}>
+            {this.props.images.map((image, i) => (
+              <li
+                className="image-list--item"
+                key={`${image.url || 'placeholder'}-${i}`}
+              >
                 {image.isPlaceholder ? (
                   <div className="image-placeholder" />
                 ) : (
-                  <img className="image" alt="Shibe dog" src={image.url} decoding="async" />
+                  <img
+                    className="image"
+                    alt="Shibe dog"
+                    src={image.url}
+                    decoding="async"
+                  />
                 )}
               </li>
             ))}
@@ -84,7 +87,6 @@ export class AllPhotosView extends Component {
 }
 
 export default inject(({ appState }) => ({
-  imageURLs: appState.imageURLs,
-  isLoadingImageURLs: appState.isLoadingImageURLs,
-  loadImageURLs: appState.loadImageURLs,
+  images: appState.images,
+  requestMoreImages: appState.requestMoreImages,
 }))(observer(AllPhotosView));
