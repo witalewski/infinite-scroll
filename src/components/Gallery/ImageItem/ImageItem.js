@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@emotion/styled';
 import { FavouritesIndicator } from './FavouritesIndicator';
-import { Overlay } from './Overlay';
+import { FavouritesButton } from './FavouritesButton';
 
 const ImageItemStyled = styled.div`
   position: relative;
@@ -26,8 +26,6 @@ export class ImageItem extends Component {
     this.state = {
       isImageLoaded: false,
       mouseOver: false,
-      message: '',
-      primaryButtonVisible: false,
       imageHeight: 0,
     };
   }
@@ -49,51 +47,16 @@ export class ImageItem extends Component {
     if (!this.state.message) {
       this.setState({
         mouseOver: false,
-        message: '',
-        undoVisible: false,
-        undoAction: null,
       });
     }
   };
 
-  addToFavourites = () => {
+  addCurrentImageToFavourites = () => {
     this.props.addToFavourites(this.props.image);
-    this.setState({
-      message: 'Added to favourites!',
-      undoAction: this.removeFromFavourites,
-    });
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-    this.timer = setTimeout(() => {
-      this.setState({
-        mouseOver: false,
-        message: '',
-        undoVisible: false,
-        undoAction: null,
-        primaryButtonVisible: false,
-      });
-    }, 2000);
   };
 
-  removeFromFavourites = () => {
+  removeCurrentImageFromFavourites = () => {
     this.props.removeFromFavourites(this.props.image);
-    this.setState({
-      message: 'Removed from favourites.',
-      undoAction: this.addToFavourites,
-    });
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-    this.timer = setTimeout(() => {
-      this.setState({
-        mouseOver: false,
-        message: '',
-        undoVisible: false,
-        undoAction: null,
-        primaryButtonVisible: false,
-      });
-    }, 2000);
   };
 
   render() {
@@ -115,13 +78,14 @@ export class ImageItem extends Component {
             onLoad={this.onImageLoad}
           />
         )}
-        <Overlay
-          mouseOver={mouseOver}
-          message={this.state.message}
+        <FavouritesButton
+          visible={mouseOver}
           isFavourite={isFavourite}
-          addToFavourites={this.addToFavourites}
-          removeFromFavourites={this.removeFromFavourites}
-          undoAction={this.state.undoAction}
+          onButtonClick={
+            isFavourite
+              ? this.removeCurrentImageFromFavourites
+              : this.addCurrentImageToFavourites
+          }
         />
         <FavouritesIndicator isFavourite={isFavourite} />
       </ImageItemStyled>
