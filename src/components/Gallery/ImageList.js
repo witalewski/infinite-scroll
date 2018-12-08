@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
-import ImageItem from './ImageItem';
+import ImageItem from './ImageItem/ImageItem';
 import { LIST_MARGIN } from '../../global/constants';
 import loadingGif from '../../assets/loading.gif';
 import { placeholderHeightGenerator } from '../../utils/placeholderHeightGenerator';
