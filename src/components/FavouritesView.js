@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { Gallery } from './Gallery';
+import { Gallery } from './Gallery/Gallery';
 
 export const FavouritesView = ({ favourites }) => (
   <Gallery title="Favourites" images={favourites.toJS()} />

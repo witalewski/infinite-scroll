@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@emotion/styled';
 
@@ -71,16 +71,22 @@ export class ImageItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isImageLoaded: false,
       mouseOver: false,
       message: '',
       primaryButtonVisible: false,
+      imageHeight: 0,
     };
-    this.imageRef = createRef();
   }
-  onImageLoad({ target }) {
-    target.classList.add('image--loaded');
-    target.parentNode.parentNode.style.height = `${target.clientHeight}px`;
+
+  componentWillUnmount() {
+      if (this.timer) {
+          clearTimeout(this.timer);
+      }
   }
+  onImageLoad = ({ target }) => {
+    this.setState({ isImageLoaded: true , imageHeight: target.clientHeight});
+  };
 
   onMouseOver = () => {
     this.setState({ mouseOver: true });
@@ -98,11 +104,7 @@ export class ImageItem extends Component {
   };
 
   addToFavourites = () => {
-    const image = this.imageRef.current;
-    this.props.addToFavourites({
-        url: this.props.image.url,
-        placeholderHeightRatio: image.clientHeight / image.clientWidth,
-      });
+    this.props.addToFavourites(this.props.image);
     this.setState({
       message: 'Added to favourites!',
       undoAction: this.removeFromFavourites,
@@ -122,11 +124,7 @@ export class ImageItem extends Component {
   };
 
   removeFromFavourites = () => {
-    const image = this.imageRef.current;
-    this.props.removeFromFavourites({
-      url: this.props.image.url,
-      placeholderHeightRatio: image.clientHeight / image.clientWidth,
-    });
+    this.props.removeFromFavourites(this.props.image);
     this.setState({
       message: 'Removed from favourites.',
       undoAction: this.addToFavourites,
@@ -147,21 +145,19 @@ export class ImageItem extends Component {
 
   render() {
     const { image, favourites } = this.props;
-    const { mouseOver } = this.state;
-    const isFavourite = favourites.includes(image.url);
+    const { mouseOver, isImageLoaded, imageHeight } = this.state;
+    const isFavourite = favourites.includes(this.props.image);
     return (
       <ImageItemStyled
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
+        style={{height: imageHeight || this.props.height}}
       >
-        {image.isPlaceholder ? (
-          <div className="image-placeholder" />
-        ) : (
+        {image && (
           <img
-            ref={this.imageRef}
-            className="image"
+            className={`image ${isImageLoaded && 'image--loaded'}`}
             alt="Shibe dog"
-            src={image.url}
+            src={image}
             decoding="async"
             onLoad={this.onImageLoad}
           />

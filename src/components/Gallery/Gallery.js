@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
 import { ImageList } from './ImageList';
-import { LIST_MARGIN, MIN_COLUMN_WIDTH } from '../global/constants';
+import { LIST_MARGIN, MIN_COLUMN_WIDTH } from '../../global/constants';
 
 const PhotosViewStyled = styled.div`
   .image-list-container {
