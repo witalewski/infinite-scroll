@@ -33,10 +33,6 @@ const OverlayStyled = styled.div`
     justify-content: center;
     align-items: center;
   }
-
-  .message--hidden {
-    display: none;
-  }
 `;
 
 export const Overlay = ({
@@ -56,7 +52,7 @@ export const Overlay = ({
     >
       {isFavourite ? '💔 Remove from Favourites' : '❤️ Add to Favourites'}
     </button>
-    <div className={`message ${!message && 'message--hidden'}`}>
+    { message && (<div className="message">
       <span>{message}</span>
       <button
         type="button"
@@ -65,6 +61,6 @@ export const Overlay = ({
       >
         Undo
       </button>
-    </div>
+    </div>)}
   </OverlayStyled>
 );
