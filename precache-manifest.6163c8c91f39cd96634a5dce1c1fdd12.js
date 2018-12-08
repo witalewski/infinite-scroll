@@ -8,15 +8,15 @@ self.__precacheManifest = [
     "url": "/infinite-scroll/static/js/runtime~main.e80e05e6.js"
   },
   {
-    "revision": "4212d76a3c930a244f7e",
-    "url": "/infinite-scroll/static/js/main.4212d76a.chunk.js"
+    "revision": "af5ca1e077e6c0ad3ef4",
+    "url": "/infinite-scroll/static/js/main.af5ca1e0.chunk.js"
   },
   {
     "revision": "fcdad204b62a089ee5b7",
     "url": "/infinite-scroll/static/js/1.fcdad204.chunk.js"
   },
   {
-    "revision": "7bcca23cd5558333e4d19b754d303084",
+    "revision": "012078d8ce44d8555277f806f36ec5a3",
     "url": "/infinite-scroll/index.html"
   }
 ];
