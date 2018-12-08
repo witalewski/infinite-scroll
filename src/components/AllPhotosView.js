@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import { inject, observer } from 'mobx-react';
 import { List, Range } from 'immutable';
 import styled from '@emotion/styled';
-import {ImageList} from './ImageList';
+import { ImageList } from './ImageList';
 
 const MIN_LIST_WIDTH = 300;
 const LIST_MARGIN = 6;
@@ -49,7 +49,7 @@ export class AllPhotosView extends Component {
       actualColumnWidth: 0,
     };
   }
-  onScroll() {
+  onScroll = () => {
     const { requestMoreImages } = this.props;
     const scrollPosition =
       window.pageYOffset || document.documentElement.scrollTop;
@@ -62,7 +62,7 @@ export class AllPhotosView extends Component {
     }
   }
 
-  onResize() {
+  onResize  = () => {
     const columnsCount = Math.floor(
       this.listContainerRef.current.clientWidth / MIN_COLUMN_WIDTH
     );
@@ -77,8 +77,8 @@ export class AllPhotosView extends Component {
 
   componentDidMount() {
     if (!this.state.initialized) {
-      window.addEventListener('scroll', this.onScroll.bind(this));
-      window.addEventListener('resize', this.onResize.bind(this));
+      window.addEventListener('scroll', this.onScroll);
+      window.addEventListener('resize', this.onResize);
 
       //invoke at once to get initial values
       this.onScroll();
@@ -86,10 +86,6 @@ export class AllPhotosView extends Component {
 
       this.setState({ initialized: true });
     }
-  }
-
-  onImageLoad({ target }) {
-    target.parentNode.style.minHeight = 0;
   }
 
   render() {
@@ -105,7 +101,11 @@ export class AllPhotosView extends Component {
       <AllPhotosViewStyled className="row">
         <div className="col image-list-container" ref={this.listContainerRef}>
           {imagesByColumn.map((list, i) => (
-            <ImageList key={`list-${i}-of-${columnsCount}`} list={list} columnWidth={actualColumnWidth}/>
+            <ImageList
+              key={`list-${i}-of-${columnsCount}`}
+              list={list}
+              columnWidth={actualColumnWidth}
+            />
           ))}
         </div>
       </AllPhotosViewStyled>
