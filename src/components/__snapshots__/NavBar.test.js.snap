@@ -2,7 +2,7 @@
 
 exports[`NavBar matches snapshot 1`] = `
 <nav
-  className="navbar sticky-top navbar-light bg-light navbar-expand"
+  className="navbar sticky-top navbar-dark bg-dark navbar-expand-sm"
 >
   <a
     className="navbar-brand"
@@ -10,8 +10,22 @@ exports[`NavBar matches snapshot 1`] = `
   >
     Infinite Scroll Demo
   </a>
+  <button
+    aria-controls="navbarTogglerDemo01"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    className="navbar-toggler"
+    data-target="#navbarTogglerDemo01"
+    data-toggle="collapse"
+    type="button"
+  >
+    <span
+      className="navbar-toggler-icon"
+    />
+  </button>
   <div
     className="collapse navbar-collapse"
+    id="navbarTogglerDemo01"
   >
     <ul
       className="navbar-nav"

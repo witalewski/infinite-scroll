@@ -1,15 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GalleryTitle matches snapshot 1`] = `
-<div
+<ForwardRef(render)
   className="row"
 >
   <div
     className="col"
   >
-    <h1>
+    <h1
+      className="title"
+    >
       Test Gallery
     </h1>
   </div>
-</div>
+</ForwardRef(render)>
 `;
