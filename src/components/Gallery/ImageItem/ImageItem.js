@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from '@emotion/styled';
 import { FavouritesIndicator } from './FavouritesIndicator';
@@ -40,7 +40,25 @@ export class ImageItem extends Component {
       mouseOver: false,
       imageHeight: 0,
     };
+    this.imageRef = createRef();
   }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    if (this.state.isImageLoaded) {
+      this.setState({
+        imageHeight: this.imageRef.current.clientHeight,
+      });
+    }
+  };
+
   onImageLoad = ({ target }) => {
     this.setState({ isImageLoaded: true, imageHeight: target.clientHeight });
   };
@@ -82,6 +100,7 @@ export class ImageItem extends Component {
       >
         {image && (
           <img
+            ref={this.imageRef}
             className={`image ${isImageLoaded && 'image--loaded'}`}
             alt="Shibe dog"
             src={image}

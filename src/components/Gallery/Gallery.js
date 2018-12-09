@@ -45,8 +45,12 @@ export class Gallery extends Component {
 
   onResize = () => {
     const containerWidth = this.listContainerRef.current.clientWidth;
-    const columnsCount = Math.floor(containerWidth / MIN_COLUMN_WIDTH);
+    const columnsCount = Math.max(
+      Math.floor(containerWidth / MIN_COLUMN_WIDTH),
+      1
+    );
     const columnWidth = containerWidth / columnsCount - 2 * LIST_MARGIN;
+    console.log(containerWidth, columnsCount, LIST_MARGIN, columnWidth);
     this.setState({
       columnsCount,
       columnWidth,

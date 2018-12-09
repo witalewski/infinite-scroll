@@ -8,7 +8,6 @@ const ImageListStyled = styled.ul`
     list-style: none;
     display: flex;
     flex-direction: column;
-    flex-basis: 50%;
     padding: 0;
     margin: 0 ${LIST_MARGIN}px;
 `;
@@ -16,7 +15,7 @@ export class ImageList extends Component {
   render() {
     const { list, columnWidth } = this.props;
     return (
-      <ImageListStyled className="image-list">
+      <ImageListStyled className="image-list" style={{flexBasis: `${columnWidth}px`}}>
         {list.map((image, i) => (
           <li
             className="image-list--item"
