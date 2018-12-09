@@ -50,7 +50,6 @@ export class Gallery extends Component {
       1
     );
     const columnWidth = containerWidth / columnsCount - 2 * LIST_MARGIN;
-    console.log(containerWidth, columnsCount, LIST_MARGIN, columnWidth);
     this.setState({
       columnsCount,
       columnWidth,
